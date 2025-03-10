@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const ProductCard = ({ product }) => {
-  const { name } = product;
+  const { name, id } = product;
   console.log(product);
 
   return (
@@ -27,8 +29,10 @@ const ProductCard = ({ product }) => {
         {/* <p>{brand}</p>
         <p>{price}</p>
         <p>{category}</p> */}
-        <div className="card-actions justify-end">
-          <button className="btn btn-sm btn-primary">View Detail</button>
+        <div className="card-actions">
+          <Link to={`/ProductDetail/${product._id}`}>
+            <button className="btn btn-sm btn-primary">View Detail</button>
+          </Link>
         </div>
       </div>
     </div>
