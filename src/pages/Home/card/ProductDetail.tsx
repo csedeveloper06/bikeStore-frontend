@@ -1,13 +1,40 @@
+import { useParams } from "react-router-dom";
 import ReactSlickExample from "../../../components/ReactSlick";
 import "../../../styles/examples.css";
+import { useEffect, useState } from "react";
 
 const ProductDetail = () => {
+  const { productId } = useParams();
+  console.log(productId);
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/products/${productId}`
+        );
+        const data = await response.json();
+        setProduct(data.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchProduct();
+  }, [productId]);
+  console.log(product);
+  const { images } = product || {};
+  // const { images } = product;
+  // console.log(images);
+
   return (
     <div className="fluid react-slick">
       <div className="fluid__image-container">
         <ReactSlickExample
+          {...{ images }}
           {...{
             rimProps: {
+              isEnlargedImagePortalEnabledForTouch: false,
               enlargedImagePortalId: "portal",
               enlargedImageContainerDimensions: {
                 width: "200%",
